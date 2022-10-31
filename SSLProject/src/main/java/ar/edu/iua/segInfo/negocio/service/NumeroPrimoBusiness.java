@@ -47,9 +47,12 @@ public class NumeroPrimoBusiness implements INumeroPrimoBusiness {
     @Override
     public ClavePublicaDTO publicKey() throws NoEncontradoException, NegocioException {
 
-    long id_R = (long)Math.floor(Math.random()*(5761445-4000000+1)+4000000);
+   // long id_R = (long)Math.floor(Math.random()*(5761445-4000000+1)+4000000);
+
+        long id_R = (long)Math.floor(Math.random()*(10-1+1)+1);
     long num_R = load(id_R).getNumero();
-    long num_R_mayor = load(id_R+10).getNumero();
+    //long num_R_mayor = load(id_R+10).getNumero();
+        long num_R_mayor = load(id_R+2).getNumero();
     long num_p = 2*num_R + 1;
     long num_q = 2*num_R_mayor + 1;
     long fi_N = (num_p-1)*(num_q-1);
@@ -58,7 +61,8 @@ public class NumeroPrimoBusiness implements INumeroPrimoBusiness {
 
 
     do{
-        clavePublica_e = (long)Math.floor(Math.random()*(fi_N-15000000+1)+15000000);
+       // clavePublica_e = (long)Math.floor(Math.random()*(fi_N-15000000+1)+15000000);
+        clavePublica_e = (long)Math.floor(Math.random()*(fi_N-1+1)+1);
     }while (mcd(clavePublica_e,fi_N) != 1);
 
         ClavePublicaDTO clavePublica = new ClavePublicaDTO(clavePublica_e,clavePublica_n);

@@ -31,8 +31,8 @@ private   MemcachedClient mcc;
 
 
 
-    public boolean agregar(NumeroPrimo numeroPrimo, String key, int tiempo){
-        return  mcc.add(key, tiempo, "").isDone();
+    public boolean agregar(long numero, String key, int tiempo){
+        return  mcc.add(key, tiempo, String.valueOf(numero)).isDone();
     }
 
 

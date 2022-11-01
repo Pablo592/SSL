@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -67,8 +68,8 @@ public class NumeroPrimoRestController {
     }
 
     @PostMapping(value = "/criptograma", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addCriptograma(@RequestBody Criptograma criptograma) {
-        return new ResponseEntity<String>(numeroPrimoBusiness.addCriptograma(criptograma), HttpStatus.OK);
+    public ResponseEntity<BigInteger> addCriptograma(@RequestBody Criptograma criptograma) {
+        return new ResponseEntity<BigInteger>(numeroPrimoBusiness.addCriptograma(criptograma), HttpStatus.OK);
     }
 
 

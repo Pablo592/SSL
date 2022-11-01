@@ -5,9 +5,9 @@ import ar.edu.iua.segInfo.modelo.dto.ClavePublicaDTO;
 import ar.edu.iua.segInfo.modelo.dto.Criptograma;
 import ar.edu.iua.segInfo.negocio.excepciones.NegocioException;
 import ar.edu.iua.segInfo.negocio.excepciones.NoEncontradoException;
-import ar.edu.iua.segInfo.util.MensajeRespuesta;
 import ar.edu.iua.segInfo.util.RespuestaGenerica;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public interface INumeroPrimoBusiness {
@@ -23,5 +23,5 @@ public interface INumeroPrimoBusiness {
 
     RespuestaGenerica<NumeroPrimo> delete(Long id) throws NegocioException, NoEncontradoException;
 
-    String addCriptograma(Criptograma criptograma);
+    BigInteger addCriptograma(Criptograma criptograma);
 }

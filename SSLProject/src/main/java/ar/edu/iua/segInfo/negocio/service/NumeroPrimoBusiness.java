@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +64,7 @@ public class NumeroPrimoBusiness implements INumeroPrimoBusiness {
     do{
        // clavePublica_e = (long)Math.floor(Math.random()*(fi_N-15000000+1)+15000000);
         clavePublica_e = (long)Math.floor(Math.random()*(fi_N-1+1)+1);
-    }while (mcd(clavePublica_e,fi_N) != 1);
+    }while (mcd(clavePublica_e,clavePublica_n) != 1);
 
         ClavePublicaDTO clavePublica = new ClavePublicaDTO(clavePublica_e,clavePublica_n);
 
@@ -78,20 +79,31 @@ public class NumeroPrimoBusiness implements INumeroPrimoBusiness {
     }
 
     @Override
-    public String addCriptograma(Criptograma criptograma) {
+    public BigInteger addCriptograma(Criptograma criptograma) {
 
-        long cripto = criptograma.getCriptograma();
+        BigInteger cripto =  new BigInteger(String.valueOf(criptograma.getCriptograma()));
 
 
         long clavePublica_e = Long.parseLong(cache.buscar("clavePublica_e"));
         long fi_N = Long.parseLong(cache.buscar("fi_N"));
         long clavePublica_n = Long.parseLong(cache.buscar("clavePublica_n"));
+        BigInteger e = new BigInteger(String.valueOf(clavePublica_e));
+        BigInteger auxi = BigInteger.valueOf(1);
 
-        double clavePrivada = (Math.pow(clavePublica_e,fi_N-1) % clavePublica_n);
+        for (int i = 0; i < fi_N-1; i++) {
+            auxi = e.multiply(BigInteger.valueOf(auxi.longValue()));
+        }
 
-        double mensajeDesencriptado = (Math.pow(cripto,clavePrivada) % clavePublica_n);
 
-        return String.valueOf(mensajeDesencriptado);
+
+        BigInteger clavePrivada = auxi.mod(BigInteger.valueOf(clavePublica_n));
+         BigInteger aux = BigInteger.valueOf(1);
+
+        for (int i = 0; i < clavePrivada.longValue(); i++) {
+        aux = cripto.multiply(BigInteger.valueOf(aux.longValue()));
+        }
+
+        return aux.mod(BigInteger.valueOf(clavePublica_n));
     }
 
 
